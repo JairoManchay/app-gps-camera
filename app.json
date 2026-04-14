@@ -23,9 +23,18 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "bundler": "metro"
     },
     "plugins": [
+      "expo-camera",
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Permitir acceso a las fotos",
+          "savePhotosPermission": "Permitir guardar fotos"
+        }
+      ],
       "expo-router",
       [
         "expo-splash-screen",
