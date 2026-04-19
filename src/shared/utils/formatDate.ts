@@ -9,6 +9,7 @@ export const formatDate = (date: Date) => {
     month: "short",
     year: "numeric",
   });
+
   return {
     time,
     day,

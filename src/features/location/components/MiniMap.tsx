@@ -1,5 +1,11 @@
+import {
+  Platform,
+  type StyleProp,
+  StyleSheet,
+  View,
+  type ViewStyle,
+} from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { Platform, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 type MiniMapProps = {
   latitude: number;

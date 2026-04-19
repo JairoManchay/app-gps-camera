@@ -1,10 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import { Text } from "react-native";
-
 
 export default function TabsLayout() {
-
   return (
     <Tabs
       screenOptions={{
@@ -12,11 +9,10 @@ export default function TabsLayout() {
         headerShown: false,
         tabBarInactiveTintColor: "rgb(236 254 255 / 0.5)",
         tabBarStyle: {
-          backgroundColor: "#1f2937"
-        }
+          backgroundColor: "#1f2937",
+        },
       }}
     >
-      <Text className="text-cyan-50/50">dw</Text>
       <Tabs.Screen
         name="index"
         options={{
@@ -46,7 +42,6 @@ export default function TabsLayout() {
           ),
         }}
       />
-
     </Tabs>
   );
 }
