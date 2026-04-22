@@ -1,4 +1,6 @@
-import { ScrollView, Text, View } from "react-native";
+import BtnInfo from "@/components/BtnInfo";
+import BtnSwitch from "@/components/BtnSwitch";
+import { Pressable, ScrollView, Text, View } from "react-native";
 
 export default function SettingsScreen() {
   return (
@@ -7,24 +9,66 @@ export default function SettingsScreen() {
         Configuración
       </Text>
 
-      <View className="px-5 py-3">
-        <Text className="text-gray-100 text-xl uppercase">
-          Configuración de overlay
-        </Text>
-        <View className="bg-gray-900 p-5 rounded-xl gap-5 mt-3">
-          <Text className="text-white text-xl">Mostrar Mapa</Text>
-          <Text className="text-white text-xl">Mostrar Mapa</Text>
-          <Text className="text-white text-xl">Mostrar Mapa</Text>
-        </View>
-      </View>
+      <View className="p-5 gap-5">
+        <View>
+          <Text className="text-gray-300/70 text-xl uppercase">
+            Mostrar en Foto
+          </Text>
+          <View className="bg-gray-900 p-5 rounded-xl gap-5 mt-3">
 
-      <View className="px-5 py-3">
-        <Text className="text-gray-100 text-xl uppercase">Equipo</Text>
-        <View className="bg-gray-900 p-5 rounded-xl gap-5 mt-3">
-          <Text className="text-white text-xl">Mostrar Mapa</Text>
-          <Text className="text-white text-xl">Mostrar Mapa</Text>
-          <Text className="text-white text-xl">Mostrar Mapa</Text>
+            <BtnSwitch text="GPS" icon="location" value={true} />
+
+            <BtnSwitch text="Hora" icon="time" value={true} />
+
+            <BtnSwitch text="Fecha" icon="calendar" value={true} />
+
+            <BtnSwitch text="Latitud / Longitud" icon="navigate" value={true} />
+
+            <BtnSwitch text="Dirección" icon="map" value={true} />
+
+            <BtnSwitch text="Guardar en galería" icon="images" value={true} />
+
+            <BtnSwitch text="Flash automático" icon="flash" value={false} />
+
+          </View>
         </View>
+
+        <View>
+          <Text className="text-gray-300/70 text-xl uppercase">
+            Información
+          </Text>
+          <View className="bg-gray-900 p-5 rounded-xl gap-5 mt-3">
+
+            <BtnInfo
+              text="Versión"
+              icon="information-circle"
+              info="1.0.0"
+            />
+
+            <BtnInfo
+              text="Desarrollado"
+              icon="person"
+              info="Evolutra"
+            />
+
+            <BtnInfo
+              text="Última actualización"
+              icon="refresh"
+              info="Abr 2026"
+            />
+
+          </View>
+        </View>
+
+        <View className="p-7 bg-orange-400/20 border border-orange-400/50 rounded-xl gap-1">
+          <Text className="text-center text-4xl">🎨</Text>
+          <Text className="text-white text-2xl text-center font-semibold">Perzonaliza tu Overlay</Text>
+          <Text className="text-white/70 text-center">Colores, fuentes, posición y más en PRO</Text>
+          <Pressable className="mt-2 bg-orange-400 p-2 rounded-xl">
+            <Text className="text-center text-xl font-semibold">Próximamente</Text>
+          </Pressable>
+        </View>
+
       </View>
     </ScrollView>
   );
