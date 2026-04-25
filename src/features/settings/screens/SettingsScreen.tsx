@@ -1,8 +1,12 @@
-import BtnInfo from "@/components/BtnInfo";
-import BtnSwitch from "@/components/BtnSwitch";
+import BtnInfo from "@/shared/components/BtnInfo";
+import BtnSwitch from "@/shared/components/BtnSwitch";
 import { Pressable, ScrollView, Text, View } from "react-native";
+import { showInfo } from "../overlay/context/ShowInfoContext";
 
 export default function SettingsScreen() {
+  const { showTime, setShowTime } = showInfo();
+
+  console.log("showTime en SettingsScreen", showTime);
   return (
     <ScrollView className="bg-gray-800 flex-1">
       <Text className="text-white text-2xl border-b border-gray-100/40 p-5">
@@ -15,10 +19,12 @@ export default function SettingsScreen() {
             Mostrar en Foto
           </Text>
           <View className="bg-gray-900 p-5 rounded-xl gap-5 mt-3">
-
-            <BtnSwitch text="GPS" icon="location" value={true} />
-
-            <BtnSwitch text="Hora" icon="time" value={true} />
+            <BtnSwitch
+              text="Hora"
+              icon="time"
+              value={false}
+              onChange={setShowTime}
+            />
 
             <BtnSwitch text="Fecha" icon="calendar" value={true} />
 
@@ -27,9 +33,6 @@ export default function SettingsScreen() {
             <BtnSwitch text="Dirección" icon="map" value={true} />
 
             <BtnSwitch text="Guardar en galería" icon="images" value={true} />
-
-            <BtnSwitch text="Flash automático" icon="flash" value={false} />
-
           </View>
         </View>
 
@@ -38,37 +41,32 @@ export default function SettingsScreen() {
             Información
           </Text>
           <View className="bg-gray-900 p-5 rounded-xl gap-5 mt-3">
+            <BtnInfo text="Versión" icon="information-circle" info="1.0.0" />
 
-            <BtnInfo
-              text="Versión"
-              icon="information-circle"
-              info="1.0.0"
-            />
-
-            <BtnInfo
-              text="Desarrollado"
-              icon="person"
-              info="Evolutra"
-            />
+            <BtnInfo text="Desarrollado" icon="person" info="Evolutra" />
 
             <BtnInfo
               text="Última actualización"
               icon="refresh"
               info="Abr 2026"
             />
-
           </View>
         </View>
 
         <View className="p-7 bg-orange-400/20 border border-orange-400/50 rounded-xl gap-1">
           <Text className="text-center text-4xl">🎨</Text>
-          <Text className="text-white text-2xl text-center font-semibold">Perzonaliza tu Overlay</Text>
-          <Text className="text-white/70 text-center">Colores, fuentes, posición y más en PRO</Text>
+          <Text className="text-white text-2xl text-center font-semibold">
+            Perzonaliza tu Overlay
+          </Text>
+          <Text className="text-white/70 text-center">
+            Colores, fuentes, posición y más en PRO
+          </Text>
           <Pressable className="mt-2 bg-orange-400 p-2 rounded-xl">
-            <Text className="text-center text-xl font-semibold">Próximamente</Text>
+            <Text className="text-center text-xl font-semibold">
+              Próximamente
+            </Text>
           </Pressable>
         </View>
-
       </View>
     </ScrollView>
   );
