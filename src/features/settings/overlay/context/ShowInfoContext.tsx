@@ -1,20 +1,31 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useMemo, useState } from "react";
 import {
   OverlaySettings,
   OverlaySettingsProviderProps,
 } from "../types/OverlaySettings";
 
-const OverLaySettingsContext = createContext<OverlaySettings | null>(null);
+export const OverLaySettingsContext = createContext<OverlaySettings | null>(
+  null,
+);
 
 export function ShowInfoProvider({ children }: OverlaySettingsProviderProps) {
-  const [showTime, setShowTime] = useState(false);
+  const [showTime, setShowTime] = useState(true);
+  const [showDate, setShowDate] = useState(true);
+  const [showCoordinates, setShowCoordinates] = useState(true);
+  const [showAddress, setShowAddress] = useState(true);
 
   const value = useMemo(
     () => ({
       showTime,
+      showDate,
+      showCoordinates,
+      showAddress,
       setShowTime,
+      setShowDate,
+      setShowCoordinates,
+      setShowAddress,
     }),
-    [showTime],
+    [showTime, showDate, showCoordinates, showAddress],
   );
 
   return (
@@ -22,11 +33,4 @@ export function ShowInfoProvider({ children }: OverlaySettingsProviderProps) {
       {children}
     </OverLaySettingsContext.Provider>
   );
-}
-
-export function showInfo() {
-  const context = useContext(OverLaySettingsContext);
-  if (!context)
-    throw new Error("useShowInfo must be used within a ShowInfoProvider");
-  return context;
 }

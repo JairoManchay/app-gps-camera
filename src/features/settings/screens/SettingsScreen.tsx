@@ -1,12 +1,20 @@
 import BtnInfo from "@/shared/components/BtnInfo";
 import BtnSwitch from "@/shared/components/BtnSwitch";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { showInfo } from "../overlay/context/ShowInfoContext";
+import { useShowInfo } from "../overlay/hooks/useShowInfo";
 
 export default function SettingsScreen() {
-  const { showTime, setShowTime } = showInfo();
+  const {
+    showTime,
+    showDate,
+    showCoordinates,
+    showAddress,
+    setShowTime,
+    setShowDate,
+    setShowCoordinates,
+    setShowAddress,
+  } = useShowInfo();
 
-  console.log("showTime en SettingsScreen", showTime);
   return (
     <ScrollView className="bg-gray-800 flex-1">
       <Text className="text-white text-2xl border-b border-gray-100/40 p-5">
@@ -22,15 +30,30 @@ export default function SettingsScreen() {
             <BtnSwitch
               text="Hora"
               icon="time"
-              value={false}
+              value={showTime}
               onChange={setShowTime}
             />
 
-            <BtnSwitch text="Fecha" icon="calendar" value={true} />
+            <BtnSwitch
+              text="Fecha"
+              icon="calendar"
+              value={showDate}
+              onChange={setShowDate}
+            />
 
-            <BtnSwitch text="Latitud / Longitud" icon="navigate" value={true} />
+            <BtnSwitch
+              text="Latitud / Longitud"
+              icon="navigate"
+              value={showCoordinates}
+              onChange={setShowCoordinates}
+            />
 
-            <BtnSwitch text="Dirección" icon="map" value={true} />
+            <BtnSwitch
+              text="Dirección"
+              icon="map"
+              value={showAddress}
+              onChange={setShowAddress}
+            />
 
             <BtnSwitch text="Guardar en galería" icon="images" value={true} />
           </View>

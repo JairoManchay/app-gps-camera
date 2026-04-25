@@ -1,4 +1,4 @@
-import { showInfo } from "@/features/settings/overlay/context/ShowInfoContext";
+import { useShowInfo } from "@/features/settings/overlay/hooks/useShowInfo";
 import type { Coordinates } from "@/types/common";
 import { StyleSheet, Text, View } from "react-native";
 import MiniMap from "../components/MiniMap";
@@ -18,9 +18,8 @@ export default function LocationInfoCard({
   time,
   day,
 }: LocationInfoCardProps) {
-  const { showTime } = showInfo();
+  const { showTime, showDate, showCoordinates, showAddress } = useShowInfo();
 
-  console.log("showTime", showTime);
   return (
     <View style={styles.overlayContainer}>
       {errorMsg && <Text style={styles.error}>{errorMsg}</Text>}
@@ -37,15 +36,21 @@ export default function LocationInfoCard({
 
           <View style={styles.rightPane}>
             <Text style={styles.title}>Ubicacion actual</Text>
-            <Text style={styles.value}>
-              Lat: {location.latitude.toFixed(6)}
-            </Text>
-            <Text style={styles.value}>
-              Lng: {location.longitude.toFixed(6)}
-            </Text>
-            <Text style={styles.value}>📍 {place || "Sin direccion"}</Text>
+            {showCoordinates && (
+              <>
+                <Text style={styles.value}>
+                  Lat: {location.latitude.toFixed(6)}
+                </Text>
+                <Text style={styles.value}>
+                  Lng: {location.longitude.toFixed(6)}
+                </Text>
+              </>
+            )}
+            {showAddress && (
+              <Text style={styles.value}>📍 {place || "Sin direccion"}</Text>
+            )}
             {showTime && <Text style={styles.value}>⏰ {time}</Text>}
-            <Text style={styles.value}>• {day}</Text>
+            {showDate && <Text style={styles.value}>• {day}</Text>}
           </View>
         </View>
       )}

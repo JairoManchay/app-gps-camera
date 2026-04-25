@@ -1,4 +1,3 @@
-import { showInfo } from "@/features/settings/overlay/context/ShowInfoContext";
 import { Ionicons } from "@expo/vector-icons";
 import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import { useRef, useState } from "react";
@@ -16,9 +15,6 @@ export default function CameraScreen() {
 
   const currentTime = useCurrentTime();
   const { time, day } = formatDate(currentTime);
-
-  const { showTime } = showInfo();
-  console.log("showTime en CameraScreen", showTime);
 
   const cameraRef = useRef<CameraView>(null);
 
