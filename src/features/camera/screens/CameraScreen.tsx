@@ -5,18 +5,44 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { formatDate } from "../../../shared/utils/formatDate";
 import { useLocationContext } from "../../location/context/LocationContext";
 import LocationInfoCard from "../../location/screens/LocationInfoCard";
+import { useShowInfo } from "../../settings/overlay/hooks/useShowInfo";
+import CapturedPhotoPreview from "../components/CapturedPhotoPreview";
 import { useCurrentTime } from "../hooks/useCurrentTime";
+import { usePhotoCapture } from "../hooks/usePhotoCapture";
 
 export default function CameraScreen() {
   const [cameraFacing, setCameraFacing] = useState<CameraType>("back");
   const [flash, setFlash] = useState<"off" | "on">("off");
+  const [isCameraReady, setIsCameraReady] = useState(false);
   const [cameraPermission, requestCameraPermission] = useCameraPermissions();
   const { location, place, errorMsg } = useLocationContext();
+
+  const { showTime, showDate, showCoordinates, showAddress } = useShowInfo();
 
   const currentTime = useCurrentTime();
   const { time, day } = formatDate(currentTime);
 
   const cameraRef = useRef<CameraView>(null);
+
+  const {
+    photo,
+    photoMetadata,
+    isSaving,
+    isSavingToLibrary,
+    saveMessage,
+    setSaveMessage,
+    takePhoto,
+    savePhotoWithMetadata,
+    resetCapturedPhoto,
+  } = usePhotoCapture({
+    location,
+    place,
+    errorMsg,
+    showCoordinates,
+    showAddress,
+    showTime,
+    showDate,
+  });
 
   const toogleCameraFacing = () => {
     if (cameraFacing === "back") {
@@ -29,11 +55,6 @@ export default function CameraScreen() {
 
   const toggleFlash = () => {
     setFlash((state) => (state === "off" ? "on" : "off"));
-  };
-
-  const takePhoto = async () => {
-    const photo = await cameraRef.current?.takePictureAsync();
-    console.log(photo);
   };
 
   if (!cameraPermission) {
@@ -64,6 +85,20 @@ export default function CameraScreen() {
     );
   }
 
+  if (photo) {
+    return (
+      <CapturedPhotoPreview
+        photoUri={photo}
+        photoMetadata={photoMetadata}
+        isSavingToLibrary={isSavingToLibrary}
+        saveMessage={saveMessage}
+        setSaveMessage={setSaveMessage}
+        onSave={savePhotoWithMetadata}
+        onRetake={resetCapturedPhoto}
+      />
+    );
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <CameraView
@@ -71,8 +106,8 @@ export default function CameraScreen() {
         facing={cameraFacing}
         flash={flash}
         ref={cameraRef}
+        onCameraReady={() => setIsCameraReady(true)}
       />
-
       <LocationInfoCard
         location={location}
         place={place}
@@ -80,7 +115,6 @@ export default function CameraScreen() {
         time={time}
         day={day}
       />
-
       <View className="absolute bottom-8 w-full flex-row justify-around items-center">
         <Pressable
           onPress={toggleFlash}
@@ -93,7 +127,11 @@ export default function CameraScreen() {
           />
         </Pressable>
 
-        <Pressable onPress={takePhoto} className="justify-center items-center">
+        <Pressable
+          onPress={() => takePhoto(cameraRef, isCameraReady)}
+          disabled={!isCameraReady || isSaving}
+          className="justify-center items-center"
+        >
           <View className="absolute w-[80px] h-[80px] rounded-full border-4 border-white" />
           <View className="w-[63] h-[63] rounded-full bg-white" />
         </Pressable>

@@ -1,8 +1,9 @@
+import { forwardRef } from "react";
 import {
   Platform,
-  type StyleProp,
   StyleSheet,
   View,
+  type StyleProp,
   type ViewStyle,
 } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
@@ -13,11 +14,10 @@ type MiniMapProps = {
   containerStyle?: StyleProp<ViewStyle>;
 };
 
-export default function MiniMap({
-  latitude,
-  longitude,
-  containerStyle,
-}: MiniMapProps) {
+const MiniMap = forwardRef<any, MiniMapProps>(function MiniMap(
+  { latitude, longitude, containerStyle },
+  ref,
+) {
   const region = {
     latitude,
     longitude,
@@ -28,6 +28,7 @@ export default function MiniMap({
   return (
     <View style={[styles.container, containerStyle]}>
       <MapView
+        ref={ref}
         provider={Platform.OS === "android" ? PROVIDER_GOOGLE : undefined}
         liteMode={Platform.OS === "android"}
         loadingEnabled
@@ -39,7 +40,9 @@ export default function MiniMap({
       </MapView>
     </View>
   );
-}
+});
+
+export default MiniMap;
 
 const styles = StyleSheet.create({
   container: {

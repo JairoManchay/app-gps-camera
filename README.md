@@ -16,6 +16,14 @@ Una aplicación Expo/React Native para capturar fotos con información de geoloc
    npx expo start
    ```
 
+   Si necesitas guardar fotos en la galeria en Android, usa una development build y arranca el servidor con:
+
+   ```bash
+   npm run dev-client
+   ```
+
+   Expo Go limita el acceso completo a la galeria en Android, por eso el guardado falla ahi.
+
    En la salida encontrarás opciones para abrir la app en:
    - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
    - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
@@ -109,6 +117,7 @@ app-gps-camera/
 
 ```bash
 npm run dev           # Inicia el servidor de desarrollo
+npm run dev-client    # Inicia el servidor para development build
 npm run android       # Abre en Android emulator
 npm run ios           # Abre en iOS simulator
 npm run web           # Abre en navegador

@@ -9,9 +9,10 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": false,
     "ios": {
-      "supportsTablet": true
+      "newArchEnabled": true
     },
     "android": {
+      "newArchEnabled": true,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -19,7 +20,21 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.READ_MEDIA_VIDEO",
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_MEDIA_VISUAL_USER_SELECTED",
+        "android.permission.ACCESS_MEDIA_LOCATION",
+        "android.permission.READ_MEDIA_AUDIO"
+      ],
+      "package": "com.dev.evolutra"
     },
     "web": {
       "output": "static",
@@ -27,12 +42,18 @@
       "bundler": "metro"
     },
     "plugins": [
-      "expo-camera",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permitir acceso a la cámara para registrar asistencia."
+        }
+      ],
       [
         "expo-media-library",
         {
-          "photosPermission": "Permitir acceso a las fotos",
-          "savePhotosPermission": "Permitir guardar fotos"
+          "photosPermission": "Permitir acceso a tus fotos para guardar la asistencia.",
+          "savePhotosPermission": "Permitir guardar fotos de asistencia en tu galería.",
+          "isAccessMediaLocationEnabled": true
         }
       ],
       "expo-router",
@@ -52,6 +73,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "165887b4-9ddd-4e6a-9803-85522c66e9cb"
+      }
     }
   }
 }
