@@ -1,4 +1,5 @@
 import { useShowInfo } from "@/features/settings/overlay/hooks/useShowInfo";
+import infoCardStyles from "@/features/shared/styles/infoCardStyles";
 import type { Coordinates } from "@/types/common";
 import { StyleSheet, Text, View } from "react-native";
 import MiniMap from "../components/MiniMap";
@@ -27,43 +28,45 @@ export default function LocationInfoCard({
   const hasVisibleInfo = visibleRowsCount > 0;
 
   const leftPaneStyle = !hasVisibleInfo
-    ? styles.leftPaneFull
+    ? infoCardStyles.leftPaneFull
     : visibleRowsCount <= 2
-      ? styles.leftPaneWide
-      : styles.leftPaneNormal;
+      ? infoCardStyles.leftPaneWide
+      : infoCardStyles.leftPaneNormal;
 
   return (
     <View style={styles.overlayContainer}>
       {errorMsg && <Text style={styles.error}>{errorMsg}</Text>}
 
       {location && (
-        <View style={styles.card}>
-          <View style={[styles.leftPaneBase, leftPaneStyle]}>
+        <View style={infoCardStyles.card}>
+          <View style={[infoCardStyles.leftPaneBase, leftPaneStyle]}>
             <MiniMap
               latitude={location.latitude}
               longitude={location.longitude}
-              containerStyle={styles.mapCard}
+              containerStyle={infoCardStyles.mapCard}
             />
           </View>
 
           {hasVisibleInfo && (
-            <View style={styles.rightPane}>
-              <Text style={styles.title}>Ubicacion actual</Text>
+            <View style={infoCardStyles.rightPane}>
+              <Text style={infoCardStyles.title}>Ubicacion actual</Text>
               {showCoordinates && (
                 <>
-                  <Text style={styles.value}>
+                  <Text style={infoCardStyles.value}>
                     Lat: {location.latitude.toFixed(6)}
                   </Text>
-                  <Text style={styles.value}>
+                  <Text style={infoCardStyles.value}>
                     Lng: {location.longitude.toFixed(6)}
                   </Text>
                 </>
               )}
               {showAddress && (
-                <Text style={styles.value}>📍 {place || "Sin direccion"}</Text>
+                <Text style={infoCardStyles.value}>
+                  📍 {place || "Sin direccion"}
+                </Text>
               )}
-              {showTime && <Text style={styles.value}>⏰ {time}</Text>}
-              {showDate && <Text style={styles.value}>• {day}</Text>}
+              {showTime && <Text style={infoCardStyles.value}>⏰ {time}</Text>}
+              {showDate && <Text style={infoCardStyles.value}>• {day}</Text>}
             </View>
           )}
         </View>
@@ -85,48 +88,8 @@ const styles = StyleSheet.create({
     left: 16,
     right: 16,
   },
-  card: {
-    width: "100%",
-    maxWidth: 420,
-    height: 120,
-    backgroundColor: "rgba(255, 255, 255, 0.96)",
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: "#E2E8F0",
-    padding: 6,
-    flexDirection: "row",
-    alignItems: "stretch",
-    gap: 10,
-  },
-  leftPaneBase: {
-    justifyContent: "center",
-  },
-  leftPaneNormal: {
-    flex: 0.42,
-  },
-  leftPaneWide: {
-    flex: 0.55,
-  },
   leftPaneFull: {
     flex: 1,
-  },
-  mapCard: {
-    height: "100%",
-  },
-  rightPane: {
-    flex: 0.58,
-    justifyContent: "space-between",
-  },
-  title: {
-    fontSize: 12,
-    fontWeight: "700",
-    color: "#0F172A",
-    marginBottom: 2,
-  },
-  value: {
-    fontSize: 10,
-    color: "#334155",
-    marginBottom: 0,
   },
   error: {
     color: "#FEE2E2",
